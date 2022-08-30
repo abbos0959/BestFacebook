@@ -1,11 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 const color = require("colors");
+
 const DB = require("./connect/db");
 require("dotenv").config();
 DB();
 
+const userRouter = require("./routers/user");
 const app = express();
+app.use(express.json());
 
 const options = {
    origin: "http://localhost:3000",
@@ -13,9 +16,7 @@ const options = {
 };
 app.use(cors(options));
 
-app.use("/", (req, res) => {
-   res.send("salom");
-});
+app.use("/", userRouter);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
